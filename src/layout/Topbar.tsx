@@ -30,7 +30,7 @@ const RESET_DEFAULT: TimeRangeKey = "THIS_MONTH";
 export function Topbar({ title, showTimeFilters, onOpenMobileNav }: TopbarProps) {
   const { rangeKey, setRangeKey } = useTimeFilter();
 
-  // UX: fechar dropdown ao clicar num item (evita ficar aberto)
+  // UX: fechar dropdown ao clicar num item
   const accountDetailsRef = useRef<HTMLDetailsElement | null>(null);
   const closeAccountMenu = () => {
     accountDetailsRef.current?.removeAttribute("open");
@@ -42,7 +42,6 @@ export function Topbar({ title, showTimeFilters, onOpenMobileNav }: TopbarProps)
         {/* LEFT */}
         <div className="flex flex-1 flex-col gap-2">
           <div className="flex items-center gap-3">
-            {/* Mobile menu */}
             <button
               type="button"
               onClick={onOpenMobileNav}
@@ -59,7 +58,6 @@ export function Topbar({ title, showTimeFilters, onOpenMobileNav }: TopbarProps)
             </div>
           </div>
 
-          {/* Time Filters */}
           {showTimeFilters && (
             <div className="space-y-2">
               <div className="flex flex-wrap gap-2">
@@ -149,5 +147,5 @@ export function Topbar({ title, showTimeFilters, onOpenMobileNav }: TopbarProps)
         </div>
       </div>
     </header>
-  );  
+  );
 }
