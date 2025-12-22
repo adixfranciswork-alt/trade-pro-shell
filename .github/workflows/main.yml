@@ -1,0 +1,17 @@
+# in your workflow config file
+jobs:
+  my-workflow-job:
+    steps:
+    - name: A previous step
+      id: previous-step
+      uses: <an-action>
+    - name: Convert a url
+      id: convert-to-raw-url
+      # or actioncloud/github-raw-url@master
+      uses: actioncloud/github-raw-url@v1
+      with:
+        github-url: ${{ previous-step.outputs.github-url }}
+    - name: Another step
+      uses: <another-action>
+      with:
+        github-raw-url: ${{ convert-to-raw-url.outputs.raw-url }}
