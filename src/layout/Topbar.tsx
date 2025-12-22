@@ -149,5 +149,5 @@ export function Topbar({ title, showTimeFilters, onOpenMobileNav }: TopbarProps)
         </div>
       </div>
     </header>
-  );
+  );  
 }
