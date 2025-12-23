@@ -5,19 +5,16 @@ import { Sidebar } from "./Sidebar";
 import { Topbar } from "./Topbar";
 import { QuickCreateFab } from "./QuickCreateFab";
 
-function getRouteTitle(pathname: string) {
+function getRouteMeta(pathname: string) {
   // Exact match first; fallback by prefix (future-proof for nested routes)
-  if (ROUTE_META[pathname]?.title) return ROUTE_META[pathname].title;
-
+  if (ROUTE_META[pathname]) return ROUTE_META[pathname];
   const key = Object.keys(ROUTE_META).find((k) => pathname.startsWith(k));
-  if (key && ROUTE_META[key]?.title) return ROUTE_META[key].title;
-
-  return "Trade Pro";
+  return key ? ROUTE_META[key] : { title: "Trade Pro", showTimeFilters: false };
 }
 
 export function AppShell() {
   const { pathname } = useLocation();
-  const title = useMemo(() => getRouteTitle(pathname), [pathname]);
+  const meta = useMemo(() => getRouteMeta(pathname), [pathname]);
 
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
 
@@ -26,18 +23,14 @@ export function AppShell() {
     pathname.startsWith("/reports/") ||
     pathname.startsWith("/macro/");
 
-  // ✅ Requisito Boss: ocultar filtros APENAS em Settings e Calendar
-  const hideTimeFilters =
-    pathname === "/settings" || pathname.startsWith("/diary/calendar");
-
   return (
     <div className="min-h-screen bg-zinc-950">
       <Sidebar mobileOpen={mobileNavOpen} onCloseMobile={() => setMobileNavOpen(false)} />
 
       <div className="lg:pl-[260px]">
         <Topbar
-          title={title}
-          showTimeFilters={!hideTimeFilters}
+          title={meta.title}
+          showTimeFilters={meta.showTimeFilters}
           onOpenMobileNav={() => setMobileNavOpen(true)}
         />
 
